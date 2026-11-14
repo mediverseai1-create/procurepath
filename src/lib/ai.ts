@@ -26,7 +26,7 @@ export async function aiJson<T extends z.ZodType>(opts: {
     throw new AiError(`Monthly AI limit reached for the ${PLANS[opts.plan].label} plan. Upgrade in Billing.`);
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
     {
@@ -41,6 +41,7 @@ export async function aiJson<T extends z.ZodType>(opts: {
     },
   );
   if (res.status === 429) throw new AiError("The AI provider is rate limiting requests. Try again shortly.");
+  if (res.status === 503) throw new AiError("The AI provider is busy right now. Try again in a minute.");
   if (!res.ok) throw new AiError(`AI request failed (${res.status}).`);
   const body = await res.json();
   const text: string | undefined = body?.candidates?.[0]?.content?.parts?.[0]?.text;
