@@ -16,7 +16,7 @@ export default async function RequestDetail({ params, searchParams }: { params: 
 
   return (
     <>
-      <PageHead title={r.title} sub={`${money(r.amount, r.currency)} · ${r.category ?? "Uncategorised"} · ${v?.name ?? "No vendor yet"}`} action={<Badge v={r.status} />} />
+      <PageHead title={r.title} sub={`${money(r.amount, r.currency)} · ${r.category ?? "Uncategorized"} · ${v?.name ?? "No vendor yet"}`} action={<Badge v={r.status} />} />
       <Flash {...sp} />
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         <div className="space-y-6">

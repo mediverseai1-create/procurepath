@@ -22,7 +22,7 @@ export default async function Requests({ searchParams }: { searchParams: SP }) {
                 return (
                   <tr key={r.id}>
                     <td className="td"><Link className="font-medium underline-offset-2 hover:underline" href={`/app/requests/${r.id}`}>{r.title}</Link></td>
-                    <td className="td">{v?.name ?? "—"}</td><td className="td">{r.category ?? "—"}</td>
+                    <td className="td">{v?.name ?? "None"}</td><td className="td">{r.category ?? "None"}</td>
                     <td className="td">{money(r.amount, r.currency)}</td><td className="td"><Badge v={r.status} /></td>
                   </tr>
                 );

@@ -26,11 +26,11 @@ export default async function Invoices({ searchParams }: { searchParams: SP }) {
             return (
               <div key={i.id} className="card p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="font-medium">{i.invoice_number} <span className="font-normal text-muted">· {v?.name ?? "—"} · {po?.po_number ?? "no PO"}</span></p>
+                  <p className="font-medium">{i.invoice_number} <span className="font-normal text-muted">· {v?.name ?? "None"} · {po?.po_number ?? "no PO"}</span></p>
                   <span className="flex items-center gap-2">{money(i.amount)} <Badge v={i.status} /></span>
                 </div>
                 <ul className="mt-3 space-y-1 text-sm">
-                  {checks.map((c) => <li key={c.name} className={c.pass ? "text-emerald-800" : "text-red-800"}>{c.pass ? "✓" : "✗"} {c.name}: <span className="text-muted">{c.detail}</span></li>)}
+                  {checks.map((c) => <li key={c.name} className={c.pass ? "text-emerald-800" : "text-red-800"}>{c.pass ? "Pass" : "Fail"}: {c.name}: <span className="text-muted">{c.detail}</span></li>)}
                 </ul>
                 {i.status === "matched" && role === "admin" && (
                   <form action={markInvoicePaid} className="mt-3"><input type="hidden" name="id" value={i.id} /><button className="btn-outline">Mark paid</button></form>

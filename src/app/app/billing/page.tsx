@@ -37,7 +37,7 @@ export default async function Billing() {
                 {k === current ? <span className="badge bg-brand-soft text-brand-deep">Current plan</span>
                   : k === "free" ? <span className="text-xs text-muted">To downgrade, cancel your subscription with the payment provider. Your plan reverts automatically when cancellation is confirmed.</span>
                   : l ? <a href={l} className="btn-primary">Upgrade to {p.label}</a>
-                  : <span className="text-xs text-muted">Payment link not configured yet.</span>}
+                  : null}
               </div>
             </div>
           );

@@ -14,7 +14,7 @@ export async function aiJson<T extends z.ZodType>(opts: {
   schema: T;
 }): Promise<z.infer<T>> {
   const key = process.env.GEMINI_API_KEY;
-  if (!key) throw new AiError("AI is not configured. Set GEMINI_API_KEY on the server.");
+  if (!key) throw new AiError("AI analysis is temporarily unavailable. Please try again shortly.");
 
   const { count } = await opts.supabase
     .from("usage_events")

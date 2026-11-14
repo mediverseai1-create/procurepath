@@ -21,7 +21,7 @@ export default async function Orders({ searchParams }: { searchParams: SP }) {
                 const v = Array.isArray(o.vendors) ? o.vendors[0] : o.vendors;
                 return (
                   <tr key={o.id}>
-                    <td className="td font-medium">{o.po_number}</td><td className="td">{v?.name ?? "—"}</td>
+                    <td className="td font-medium">{o.po_number}</td><td className="td">{v?.name ?? "None"}</td>
                     <td className="td">{money(o.amount)}</td><td className="td">{money(o.received_amount)}</td>
                     <td className="td">
                       <form action={recordReceipt} className="flex gap-2">

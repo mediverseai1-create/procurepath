@@ -3,8 +3,8 @@ import AuthForm from "@/components/AuthForm";
 
 const errors: Record<string, string> = {
   link: "That link is invalid or has expired. Request a new one.",
-  config: "The app is not connected to Supabase yet. Set the environment variables.",
-  noorg: "Your account has no workspace. Contact support.",
+  config: "Sign-in is temporarily unavailable. Please try again shortly.",
+  noorg: "Your account is not linked to a company. Sign up again or contact your administrator.",
 };
 
 export default async function Login({ searchParams }: { searchParams: Promise<{ error?: string }> }) {

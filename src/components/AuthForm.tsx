@@ -8,8 +8,8 @@ type Mode = "login" | "signup" | "forgot" | "reset";
 
 const copy: Record<Mode, { title: string; cta: string }> = {
   login: { title: "Sign in to ProcurePath", cta: "Sign in" },
-  signup: { title: "Create your workspace", cta: "Create account" },
-  forgot: { title: "Reset your password", cta: "Send reset link" },
+  signup: { title: "Create your ProcurePath account", cta: "Create account" },
+  forgot: { title: "Reset your password", cta: "Reset password" },
   reset: { title: "Choose a new password", cta: "Update password" },
 };
 
@@ -24,7 +24,7 @@ export default function AuthForm({ mode, initialError }: { mode: Mode; initialEr
     const f = new FormData(e.currentTarget);
     const email = String(f.get("email") ?? "").trim();
     const password = String(f.get("password") ?? "");
-    const origin = window.location.origin;
+    const origin = (process.env.NEXT_PUBLIC_SITE_URL || window.location.origin).replace(/\/$/, "");
     try {
       const supabase = createClient();
       if (mode === "login") {
@@ -75,12 +75,12 @@ export default function AuthForm({ mode, initialError }: { mode: Mode; initialEr
         )}
         {error && <p role="alert" className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p>}
         {info && <p role="status" className="rounded border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{info}</p>}
-        <button disabled={busy} className="btn-primary w-full">{busy ? "Please wait…" : copy[mode].cta}</button>
+        <button disabled={busy} className="btn-primary w-full">{busy ? "Please wait" : copy[mode].cta}</button>
       </form>
       <div className="mt-6 space-y-2 text-sm text-muted">
         {mode === "login" && <>
           <p><Link href="/forgot-password" className="underline">Forgot password?</Link></p>
-          <p>New here? <Link href="/signup" className="underline">Create a workspace</Link></p></>}
+          <p>New to ProcurePath? <Link href="/signup" className="underline">Sign up</Link></p></>}
         {mode === "signup" && <p>Already have an account? <Link href="/login" className="underline">Sign in</Link></p>}
         {mode === "forgot" && <p><Link href="/login" className="underline">Back to sign in</Link></p>}
       </div>

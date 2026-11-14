@@ -92,9 +92,9 @@ export function matchInvoice(args: {
 }
 
 export const PLANS = {
-  free: { label: "Starter", price: "Free", requests: 15, ai: 10, blurb: "For teams trying structured intake." },
-  growth: { label: "Growth", price: "$499 / mo", requests: 250, ai: 300, blurb: "For finance and ops teams running real procurement." },
-  scale: { label: "Scale", price: "$1,499 / mo", requests: 5000, ai: 3000, blurb: "For multi-team organisations with higher volume." },
+  free: { label: "Starter", price: "Free", requests: 15, ai: 10, blurb: "Put AI-controlled intake and approvals in place for one team." },
+  growth: { label: "Growth", price: "$499 / mo", requests: 250, ai: 300, blurb: "Run procurement across finance and operations with full AI coverage." },
+  scale: { label: "Scale", price: "$1,499 / mo", requests: 5000, ai: 3000, blurb: "Control spend across multiple teams at high volume." },
 } as const;
 export type PlanKey = keyof typeof PLANS;
 

@@ -58,7 +58,7 @@ export default async function RfxDetail({ params, searchParams }: { params: Prom
               </select></label>
             <label className="block"><span className="lbl">Bid price (USD)</span><input name="price" type="number" min="0" step="0.01" required className="inp" /></label>
             {criteria.filter((c) => c.name !== "Price").map((c) => (
-              <label key={c.name} className="block"><span className="lbl">{c.name} score (0–10)</span><input name={`score_${c.name}`} type="number" min="0" max="10" step="0.5" className="inp" /></label>
+              <label key={c.name} className="block"><span className="lbl">{c.name} score (0 to 10)</span><input name={`score_${c.name}`} type="number" min="0" max="10" step="0.5" className="inp" /></label>
             ))}
             <button className="btn-primary w-full">Add bid</button>
           </form>
