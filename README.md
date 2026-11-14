@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ProcurePath
 
-## Getting Started
+Intake-to-pay procurement workspace for growing teams. Next.js 16 (App Router), TypeScript, Tailwind 4, Supabase (Auth, Postgres, RLS), Gemini for AI assistance.
 
-First, run the development server:
+Product direction was informed by a public-site review of zip.com (since moved from ziphq.com): intake → approvals → vendor risk → sourcing → contracts → PO → invoice matching, with AI assistance. All copy, branding and code here are original.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Modules
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Module | Deterministic logic (`src/lib/logic.ts`) | AI (Gemini, server-side, validated with zod) |
+|---|---|---|
+| Intake & approvals | Approval chain from amount, category, vendor data risk; no self-approval | Request triage / missing-info review |
+| Vendors | Risk score and tier from SOC 2 / DPA / PII / age | Plain-language summary and due-diligence questions |
+| Sourcing | Weighted bid scoring, automatic price score | none |
+| Contracts | Renewal and notice-window tracking | Clause review (advisory) |
+| Orders & invoices | PO numbering, receipts, 2% tolerance match, duplicate check | none |
+| Billing | Plan limits (requests, AI actions per month) | none |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. `npm install`
+2. Create a Supabase project and run `supabase/schema.sql` in the SQL editor.
+3. Copy `.env.example` to `.env.local` and fill it in.
+4. In Supabase Auth settings, add `http://localhost:3000/auth/callback` (and your production URL) to redirect URLs.
+5. `npm run dev`; `node --experimental-strip-types scripts/test-logic.mts` runs the logic tests.
 
-## Learn More
+## Payments
 
-To learn more about Next.js, take a look at the following resources:
+Billing page links to `NEXT_PUBLIC_PAYMENT_LINK_GROWTH` / `_SCALE` with the organisation id as `client_reference_id`. Plans change only in `/api/webhooks/stripe`, which verifies the Stripe signature, is idempotent, and maps the verified amount paid (`PLAN_AMOUNT_*_CENTS`) to a plan. Point a Stripe webhook at `https://<domain>/api/webhooks/stripe` for `checkout.session.completed`. Cancellation downgrades need `org_id` in subscription metadata (not set by plain payment links), so cancellations are not yet automatic.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Import the repo, add every variable from `.env.example` (service-role and Gemini keys as server-only), deploy, then update Supabase redirect URLs and the Stripe webhook URL.
 
-## Deploy on Vercel
+## Known gaps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Pricing tiers and limits are placeholders; the reference product is quote-only. Edit `PLANS` in `src/lib/logic.ts`.
+- Team invitations and role assignment UI are not built (new users become admin of their own workspace; roles are set in the `memberships` table).
+- No file upload or invoice OCR. Contract text is pasted in.
+- Authenticated flows have not been exercised against a live Supabase project yet.

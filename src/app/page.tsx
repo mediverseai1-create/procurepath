@@ -1,69 +1,65 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Header, Footer } from "@/components/SiteChrome";
+
+const modules = [
+  { n: "01", t: "Intake", d: "One request form for every purchase. Policy decides who needs to approve, so requesters never guess." },
+  { n: "02", t: "Approvals", d: "Threshold, category and data-risk rules create the approval chain automatically, with a full decision trail." },
+  { n: "03", t: "Vendors", d: "Keep a vendor directory with a transparent risk score based on security and data-handling evidence." },
+  { n: "04", t: "Sourcing", d: "Run competitive bids with weighted criteria and see a ranked, explainable comparison." },
+  { n: "05", t: "Contracts", d: "Store agreements, track renewal notice windows and get an AI-assisted first-pass clause review." },
+  { n: "06", t: "Orders & invoices", d: "Issue purchase orders, log receipts and match invoices before anything is paid." },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div className="hero-bg text-white">
+        <Header dark />
+        <section className="mx-auto grid max-w-6xl gap-10 px-4 pb-24 pt-16 md:grid-cols-2 md:pt-24">
+          <h1 className="text-5xl font-light leading-[1.05] tracking-tight md:text-7xl">Procurement that runs itself, from request to payment</h1>
+          <div className="self-end">
+            <p className="text-lg text-white/90">ProcurePath is the workspace where purchase requests are routed, vetted, ordered and matched to invoices, with AI to explain and summarise and rules to decide.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/signup" className="rounded-[5px] bg-white px-5 py-3 font-medium text-brand-deep">Start free</Link>
+              <Link href="/pricing" className="btn-ghost px-5 py-3 text-white">See pricing</Link>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="platform" className="mx-auto max-w-6xl px-4 py-20">
+        <h2 className="max-w-2xl text-3xl font-light tracking-tight md:text-4xl">One connected path instead of six disconnected tools</h2>
+        <p className="mt-3 max-w-2xl text-muted">Every module shares the same records, so a request becomes an approval, a purchase order and a matched invoice without re-keying.</p>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {modules.map((m) => (
+            <div key={m.n} className="card p-6">
+              <span className="text-sm text-brand">{m.n}</span>
+              <h3 className="mt-2 text-lg font-medium">{m.t}</h3>
+              <p className="mt-2 text-sm text-muted">{m.d}</p>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="bg-surface">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 md:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-light tracking-tight md:text-4xl">Rules make the decisions. AI explains them.</h2>
+            <p className="mt-3 text-muted">Approval routing, vendor risk scores, bid rankings and three-way invoice matching are calculated by deterministic logic you can audit. AI is used where language helps: triaging requests, summarising vendor risk and flagging contract clauses.</p>
+          </div>
+          <ul className="space-y-3 text-sm">
+            {["Approvals are created by policy and cannot be skipped or self-approved", "Invoice matching checks the PO, receipt and duplicates with a 2% tolerance", "Row-level security keeps each company's data isolated", "AI output is labelled and never overrides a calculated number"].map((t) => (
+              <li key={t} className="card px-4 py-3">{t}</li>
+            ))}
+          </ul>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-20 text-center">
+        <h2 className="text-3xl font-light tracking-tight md:text-4xl">Bring your first purchase request in today</h2>
+        <Link href="/signup" className="btn-primary mt-8 px-6 py-3">Create your workspace</Link>
+      </section>
+      <Footer />
+    </>
   );
 }
