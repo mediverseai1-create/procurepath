@@ -1,27 +1,18 @@
 import Link from "next/link";
 
-const S = "M18.6 6.2C18.2 5 17 4.4 15.4 4.4c-1.9 0-3.1.9-3.1 2.2 0 1.4 1.3 1.8 3.1 2 1.8.2 3.1.6 3.1 2 0 1.3-1.2 2.2-3.1 2.2-1.6 0-2.8-.6-3.2-1.8";
-
 export function LogoMark({ light = false, size = 28 }: { light?: boolean; size?: number }) {
-  const stroke = light ? "#0b1670" : "#fff";
-  const accent = light ? "#2b45d8" : "#7dd3fc";
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id={light ? "lg-l" : "lg-d"} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#3d5af1" />
-          <stop offset="1" stopColor="#0b1670" />
-        </linearGradient>
-      </defs>
-      <rect width="32" height="32" rx="8" fill={light ? "#fff" : `url(#lg-d)`} />
-      <g fill="none" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <path d={S} transform="translate(0 .6)" />
-        <path d={S} transform="translate(0 12.4)" />
-      </g>
-      <path d="M22.5 22.5l4.2-4.2m0 0h-3.2m3.2 0v3.2" fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <rect width="32" height="32" rx="6" fill={light ? "#fff" : "#2b45d8"} />
+      <path
+        fill={light ? "#0b1670" : "#fff"}
+        fillRule="evenodd"
+        d="M9 7h6.5a5.5 5.5 0 0 1 0 11H13v7H9zM13 11v3.5h2.5a1.75 1.75 0 0 0 0-3.5z"
+      />
     </svg>
   );
 }
+
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
@@ -60,6 +51,7 @@ export function Footer() {
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-2">
           <Link href="/#platform">Platform</Link>
+          <Link href="/#faq">FAQ</Link>
           <Link href="/pricing">Pricing</Link>
           <Link href="/about">Company</Link>
           <Link href="/login">Sign in</Link>
