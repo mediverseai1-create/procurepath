@@ -25,7 +25,14 @@ Product direction was informed by a public-site review of zip.com (since moved f
 
 ## Payments
 
-Billing page links to `NEXT_PUBLIC_PAYMENT_LINK_GROWTH` / `_SCALE` with the organisation id as `client_reference_id`. Plans change only in `/api/webhooks/stripe`, which verifies the Stripe signature, is idempotent, and maps the verified amount paid (`PLAN_AMOUNT_*_CENTS`) to a plan. Point a Stripe webhook at `https://<domain>/api/webhooks/stripe` for `checkout.session.completed`. Cancellation downgrades need `org_id` in subscription metadata (not set by plain payment links), so cancellations are not yet automatic.
+Growth ($47) and Scale ($97) upgrade through Selar checkout links (defaults built in; override with `NEXT_PUBLIC_PAYMENT_LINK_GROWTH` / `_SCALE`). Returning from checkout never activates a plan. Until a verified Selar webhook is wired in, an admin activates a plan after confirming the payment in the Selar dashboard, matching on the buyer email:
+
+```sql
+update organizations set plan = 'growth', subscription_status = 'active'
+where id = (select m.org_id from memberships m join auth.users u on u.id = m.user_id where u.email = 'buyer@example.com' and m.role = 'admin' limit 1);
+```
+
+A Stripe-signed webhook (`/api/webhooks/stripe`) is also included for use if you move to Stripe.
 
 ## Deploy to Vercel
 
